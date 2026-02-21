@@ -76,23 +76,42 @@
         </section>
 
         <aside class="sidebar">
-            <div class="menu-item">
-                <img src="aset/esteh.jpg" alt="Menu 1">
-                <p>Es Teh Manis Original</p>
-            </div>
-            <div class="menu-item">
-                <img src="aset/miloteh.jpeg" alt="Menu 2">
-                <p>Es Teh Milo</p>
-                <button class="view-details-btn">View<br>Details</button>
-            </div>
-            <div class="menu-item">
-                <p style="color: #bbb; font-style: italic;">Scroll for more</p>
+            <div class="menu-list-wrapper" id="menuWrapper">
+                <div class="menu-item">
+                    <img src="aset/esteh.jpg" alt="Menu 1">
+                    <p>Es Teh Manis Original</p>
+                </div>
+                <div class="menu-item">
+                    <img src="aset/escoklat.png" alt="Menu 3" style="width: 80px; height: 80px; border-radius: 50%;">
+                    <p>Es Coklat Spesial</p>
+                </div>
+                <div class="menu-item">
+                    <img src="aset/escoklat.png" alt="Menu 3" style="width: 80px; height: 80px; border-radius: 50%;">
+                    <p>Es Coklat Spesial</p>
+                </div>
+                <div class="menu-item">
+                    <img src="aset/esteh.jpg" alt="Menu 1">
+                    <p>Es Teh Manis Original</p>
+                </div>
+                <div class="menu-item">
+                    <img src="aset/escoklat.png" alt="Menu 3" style="width: 80px; height: 80px; border-radius: 50%;">
+                    <p>Es Coklat Spesial</p>
+                </div>
+                <div class="menu-item">
+                    <img src="aset/esteh.jpg" alt="Menu 1">
+                    <p>Es Teh Manis Original</p>
+                </div>
+                <div class="menu-item">
+                    <img src="aset/miloteh.jpeg" alt="Menu 2">
+                    <p>Es Teh Milo</p>
+                    <!-- <button class="view-details-btn">View Details</button> -->
+                </div>
             </div>
         </aside>
 
         <div class="nav-arrows">
-            <div class="arrow">▲</div>
-            <div class="arrow">▼</div>
+            <div class="arrow" onclick="moveMenu('up')">▲</div>
+            <div class="arrow" onclick="moveMenu('down')">▼</div>
         </div>
     </div>
 
@@ -130,22 +149,51 @@
 
 <script>
 function sendToWhatsapp() {
-    // 1. Ambil data dari inputan
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const message = document.getElementById('message').value;
-    
-    // 2. Masukkan nomor WhatsApp kamu (awali dengan kode negara, misal 62)
-    const phone = "6287872634316"; // GANTI DENGAN NOMOR WA KAMU
-    
-    // 3. Susun format pesan agar rapi
-    const fullMessage = `Halo Iketan, saya ${name} (${email}).%0A%0A*Pesan:*%0A${message}`;
-    
-    // 4. Buat URL WhatsApp
+    const phone = "6287872634316";
+
+    // Validasi sederhana
+    if (!name || !message) {
+        alert("Nama dan Pesan wajib diisi ya!");
+        return;
+    }
+
+    const fullMessage = `Halo Iketan, saya *${name}* (${email}).%0A%0A*Pesan:*%0A${message}`;
     const url = `https://wa.me/${phone}?text=${fullMessage}`;
-    
-    // 5. Buka di tab baru
+
     window.open(url, '_blank').focus();
+    
+    // Reset form setelah kirim
+    document.getElementById('whatsappForm').reset();
+}
+
+let currentPosition = 0;
+
+function moveMenu(direction) {
+    const wrapper = document.getElementById('menuWrapper');
+    const sidebar = document.querySelector('.sidebar');
+    
+    const firstItem = wrapper.querySelector('.menu-item');
+    const itemFullHeight = firstItem.offsetHeight + 30;
+    
+    const maxScroll = -(wrapper.scrollHeight - sidebar.clientHeight);
+
+    if (direction === 'down') {
+        if (currentPosition > maxScroll) {
+            currentPosition -= itemFullHeight;
+        }
+        if (currentPosition < maxScroll) currentPosition = maxScroll;
+
+    } else if (direction === 'up') {
+        if (currentPosition < 0) {
+            currentPosition += itemFullHeight;
+        }
+        if (currentPosition > 0) currentPosition = 0;
+    }
+
+    wrapper.style.transform = `translateY(${currentPosition}px)`;
 }
 </script>
 </body>
