@@ -20,11 +20,6 @@
             <a href="#contact">Contact</a>
             <a href="#menu">Menu</a>
         </div>
-
-        <div class="search-container">
-            <input type="search" placeholder="search..">
-            <button class="search-button">Search</button>
-        </div>
     </nav>
 
     <section class="hero">
@@ -70,6 +65,13 @@
 
     <div class="menu-container" id="menu">
         <div class="menu-header-title">Our Menu</div>
+        <div class="menu-search-wrapper">
+            <div class="search-container">
+                <input type="search" id="menuSearchInput" placeholder="Cari menu favorit..">
+                <button id="resetSearch" class="reset-btn" style="display: none;">&times;</button>
+                <button class="search-button">Search</button>
+            </div>
+        </div>
         <section class="hero-menu">
             <h1>Es Teh Coklat BengBeng</h1>
             <img src="aset/escoklat.png" class="big-plate" alt="Main Dish">
@@ -77,6 +79,9 @@
 
         <aside class="sidebar">
             <div class="menu-list-wrapper" id="menuWrapper">
+                <div id="notFoundMsg" style="display: none; color: #888; font-style: italic; padding: 20px;">
+                Menu tidak ditemukan...
+            </div>
                 <div class="menu-item">
                     <img src="aset/esteh.jpg" alt="Menu 1">
                     <p>Es Teh Manis Original</p>
@@ -195,6 +200,53 @@ function moveMenu(direction) {
 
     wrapper.style.transform = `translateY(${currentPosition}px)`;
 }
+
+const searchInput = document.getElementById('menuSearchInput');
+const resetBtn = document.getElementById('resetSearch');
+const notFoundMsg = document.getElementById('notFoundMsg');
+
+searchInput.addEventListener('input', function(e) {
+    const searchTerm = e.target.value.toLowerCase();
+    const menuItems = document.querySelectorAll('.menu-item');
+    let hasMatch = false;
+
+    // Tampilkan/sembunyikan tombol reset
+    resetBtn.style.display = searchTerm.length > 0 ? "block" : "none";
+
+    menuItems.forEach(item => {
+        const menuName = item.querySelector('p').textContent.toLowerCase();
+        
+        if (menuName.includes(searchTerm)) {
+            item.style.display = "block";
+            hasMatch = true;
+        } else {
+            item.style.display = "none";
+        }
+    });
+
+    // Tampilkan pesan jika tidak ada yang cocok
+    notFoundMsg.style.display = hasMatch ? "none" : "block";
+
+    // Reset posisi ke atas setiap kali mengetik
+    currentPosition = 0;
+    wrapper.style.transform = `translateY(0px)`;
+});
+
+// Fungsi Tombol Reset
+resetBtn.addEventListener('click', function() {
+    searchInput.value = ""; // Kosongkan input
+    resetBtn.style.display = "none"; // Sembunyikan tombol X
+    notFoundMsg.style.display = "none"; // Sembunyikan pesan error
+    
+    // Tampilkan kembali semua menu
+    document.querySelectorAll('.menu-item').forEach(item => {
+        item.style.display = "block";
+    });
+
+    // Kembalikan posisi scroll ke atas
+    currentPosition = 0;
+    wrapper.style.transform = `translateY(0px)`;
+});
 </script>
 </body>
 </html>
