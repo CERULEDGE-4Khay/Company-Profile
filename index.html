@@ -100,14 +100,17 @@
         <div class="container contact-container">
             <h2>Contact Us</h2>
             <div class="contact">
-                <form class="contact-form">
+                <form class="contact-form" id="whatsappForm">
                     <label for="name">Name:</label>
-                    <input type="text" id="name" name="name" placeholder="isi nama anda.." required>
+                    <input type="text" id="name" placeholder="Isi nama anda.." required>
+                    
                     <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" placeholder="isi email anda @..">
+                    <input type="email" id="email" placeholder="Isi email anda..">
+                    
                     <label for="message">Message:</label>
-                    <textarea id="message" name="message" placeholder="apa pesan yg mau anda kirim?"></textarea>
-                    <button type="submit">Submit</button>
+                    <textarea id="message" placeholder="Apa pesan yang mau anda kirim?"></textarea>
+                    
+                    <button type="button" onclick="sendToWhatsapp()">Kirim ke WhatsApp</button>
                 </form>
             </div>
         </div>
@@ -124,5 +127,26 @@
         </div>
         <p>&copy; 2024 Your Company. All rights reserved.</p>
     </footer>
+
+<script>
+function sendToWhatsapp() {
+    // 1. Ambil data dari inputan
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+    
+    // 2. Masukkan nomor WhatsApp kamu (awali dengan kode negara, misal 62)
+    const phone = "6287872634316"; // GANTI DENGAN NOMOR WA KAMU
+    
+    // 3. Susun format pesan agar rapi
+    const fullMessage = `Halo Iketan, saya ${name} (${email}).%0A%0A*Pesan:*%0A${message}`;
+    
+    // 4. Buat URL WhatsApp
+    const url = `https://wa.me/${phone}?text=${fullMessage}`;
+    
+    // 5. Buka di tab baru
+    window.open(url, '_blank').focus();
+}
+</script>
 </body>
 </html>
