@@ -90,15 +90,10 @@ It can also be used as a **starter template** for building real company profile 
 
 ---
 
-## 📸 Preview
+📸 **Tampilan Website**
+[![Preview Website Portofolio](aset/companyprofile.png)](https://mochamadkhairan.github.io/Company-Profile/)
 
-You can add screenshots of the website here to show the interface.
-
-Example:
-preview/homepage.png
-preview/services.png
-preview/contact.png
-
+🔗 **Live Preview:** [Lihat Website Saya Di Sini](https://mochamadkhairan.github.io/Company-Profile/)
 
 ---
 
